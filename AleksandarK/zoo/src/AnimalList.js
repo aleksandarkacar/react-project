@@ -62,6 +62,22 @@ function AnimalList() {
     });
   };
 
+  const checkAnimals = (sector) => {
+    let filteredAnimals = animals.filter((animal) => animal.sector == sector);
+    let forAlert = [
+      "Name: | Type: | DateOfBirth: \n" +
+        filteredAnimals.reduce(
+          (accumulator, animal) =>
+            accumulator +
+            `${animal.type} | ${animal.name} | ${animal.dateOfBirth} \n`,
+          ""
+        ),
+    ];
+    console.log(filteredAnimals);
+    console.log(forAlert);
+    alert(forAlert);
+  };
+
   return (
     <div className="App">
       <h1>Animals:</h1>
@@ -88,7 +104,7 @@ function AnimalList() {
           />
         </label>
         <label>
-          Age:
+          Date Of Birth:
           <input
             placeholder="Age"
             type="text"
@@ -145,6 +161,27 @@ function AnimalList() {
               </td>
             </tr>
           ))}
+        </tbody>
+      </table>
+      <h1>Sectors:</h1>
+      <table className="Sectors">
+        <thead>
+          <tr>
+            {sectors.map((sector, key) => {
+              return <th key={key}>{sector}</th>;
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {sectors.map((sector, key) => {
+            return (
+              <td key={key}>
+                <button onClick={() => checkAnimals(sector)}>
+                  Check Animals
+                </button>
+              </td>
+            );
+          })}
         </tbody>
       </table>
     </div>
