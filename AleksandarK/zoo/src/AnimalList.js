@@ -1,17 +1,36 @@
 import React, { useState } from "react";
 
 function AnimalList() {
-  let [animals, setAnimals] = useState([
-    { type: "Dog", name: "Boban", dateOfBirth: new Date().toISOString() },
-    { type: "Cat", name: "Milenko", dateOfBirth: new Date().toISOString() },
+  const [animals, setAnimals] = useState([
+    {
+      type: "Dog",
+      name: "Boban",
+      dateOfBirth: new Date().toISOString(),
+      sector: "mammals",
+    },
+    {
+      type: "Cat",
+      name: "Milenko",
+      dateOfBirth: new Date().toISOString(),
+      sector: "mammals",
+    },
     {
       type: "Girrafe",
       name: "TallBoy",
       dateOfBirth: new Date().toISOString(),
+      sector: "mammals",
     },
     { type: "Elephant", name: "Biggie Smalls" },
-    { type: "Toucan", name: "Sam", dateOfBirth: new Date().toISOString() },
+    {
+      type: "Toucan",
+      name: "Sam",
+      dateOfBirth: new Date().toISOString(),
+      sector: "birds",
+    },
   ]);
+
+  const sectors = ["mammals", "birds"];
+
   const removeAnimal = (key) => {
     let newAnimals = animals.filter((animal, index) => index != key);
     setAnimals(newAnimals);
@@ -30,11 +49,17 @@ function AnimalList() {
   const [type, setType] = useState("");
   const [name, setName] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState(0);
+  const [currentSector, setCurrentSector] = useState("");
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevents default behaviour of form submit action
-    // console.log({ type: type, name: type, dateOfBirth: dateOfBirth });
-    addAnimal({ type: type, name: type, dateOfBirth: dateOfBirth }); // Sending data   to the server. (Will be covered sometime later)
+    e.preventDefault();
+
+    addAnimal({
+      type: type,
+      name: type,
+      dateOfBirth: dateOfBirth,
+      sector: currentSector,
+    });
   };
 
   return (
@@ -73,6 +98,19 @@ function AnimalList() {
             }}
           />
         </label>
+        <label>
+          Sector:
+          <select
+            onChange={(e) => {
+              setCurrentSector(e.target.value);
+            }}
+          >
+            <option value="">--Please choose an option--</option>
+            {sectors.map((sector) => {
+              return <option value={sector}>{sector}</option>;
+            })}
+          </select>
+        </label>
         <button>Submit</button>
       </form>
       <table className="App">
@@ -81,6 +119,7 @@ function AnimalList() {
             <th>Type</th>
             <th>Name</th>
             <th>Date of birth</th>
+            <th>Sector</th>
           </tr>
         </thead>
         <tbody>
@@ -92,6 +131,11 @@ function AnimalList() {
                 <td>{animal.dateOfBirth}</td>
               ) : (
                 <td>Unknown</td>
+              )}
+              {animal.sector ? (
+                <td>{animal.sector}</td>
+              ) : (
+                <td>Sector unknown</td>
               )}
               <td>
                 <button onClick={() => removeAnimal(key)}>Remove</button>
