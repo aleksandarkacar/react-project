@@ -2,11 +2,7 @@ export const animals = [
   { type: "Dog", name: "Boban", dateOfBirth: new Date().toISOString() },
   { type: "Cat", name: "Milenko", dateOfBirth: new Date().toISOString() },
   { type: "Girrafe", name: "TallBoy", dateOfBirth: new Date().toISOString() },
-  {
-    type: "Elephant",
-    name: "Biggie Smalls",
-    dateOfBirth: new Date().toISOString(),
-  },
+  { type: "Elephant", name: "Biggie Smalls" },
   { type: "Toucan", name: "Sam", dateOfBirth: new Date().toISOString() },
 ];
 export function showAnimals(animals) {
@@ -26,7 +22,11 @@ export function showAnimals(animals) {
             <tr>
               <td>{animal.type}</td>
               <td>{animal.name}</td>
-              <td>{animal.dateOfBirth}</td>
+              {animal.dateOfBirth ? (
+                <td>{animal.dateOfBirth}</td>
+              ) : (
+                <td>Unknown</td>
+              )}
             </tr>
           ))}
         </tbody>
