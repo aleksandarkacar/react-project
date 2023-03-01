@@ -15,7 +15,12 @@ function AnimalList() {
   const removeAnimal = (key) => {
     let newAnimals = animals.filter((animal, index) => index != key);
     setAnimals(newAnimals);
-    return;
+    return newAnimals;
+  };
+
+  const moveToTop = (key) => {
+    let newAnimals = [animals[key], ...removeAnimal(key)];
+    setAnimals(newAnimals);
   };
 
   return (
@@ -41,6 +46,9 @@ function AnimalList() {
               )}
               <td>
                 <button onClick={() => removeAnimal(key)}>Remove</button>
+              </td>
+              <td>
+                <button onClick={() => moveToTop(key)}>Move To Top</button>
               </td>
             </tr>
           ))}
