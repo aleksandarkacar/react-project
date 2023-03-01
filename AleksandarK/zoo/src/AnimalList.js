@@ -1,15 +1,27 @@
-export const animals = [
-  { type: "Dog", name: "Boban", dateOfBirth: new Date().toISOString() },
-  { type: "Cat", name: "Milenko", dateOfBirth: new Date().toISOString() },
-  { type: "Girrafe", name: "TallBoy", dateOfBirth: new Date().toISOString() },
-  { type: "Elephant", name: "Biggie Smalls" },
-  { type: "Toucan", name: "Sam", dateOfBirth: new Date().toISOString() },
-];
-export function showAnimals(animals) {
+import React, { useState } from "react";
+
+function AnimalList() {
+  let [animals, setAnimals] = useState([
+    { type: "Dog", name: "Boban", dateOfBirth: new Date().toISOString() },
+    { type: "Cat", name: "Milenko", dateOfBirth: new Date().toISOString() },
+    {
+      type: "Girrafe",
+      name: "TallBoy",
+      dateOfBirth: new Date().toISOString(),
+    },
+    { type: "Elephant", name: "Biggie Smalls" },
+    { type: "Toucan", name: "Sam", dateOfBirth: new Date().toISOString() },
+  ]);
+  const removeAnimal = (key) => {
+    let newAnimals = animals.filter((animal, index) => index != key);
+    setAnimals(newAnimals);
+    return;
+  };
+
   return (
-    <div>
+    <div className="App">
       <h1>Animals:</h1>
-      <table>
+      <table className="App">
         <thead>
           <tr>
             <th>Type</th>
@@ -19,7 +31,7 @@ export function showAnimals(animals) {
         </thead>
         <tbody>
           {animals.map((animal, key) => (
-            <tr>
+            <tr key={key}>
               <td>{animal.type}</td>
               <td>{animal.name}</td>
               {animal.dateOfBirth ? (
@@ -27,6 +39,9 @@ export function showAnimals(animals) {
               ) : (
                 <td>Unknown</td>
               )}
+              <td>
+                <button onClick={() => removeAnimal(key)}>Remove</button>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -34,3 +49,4 @@ export function showAnimals(animals) {
     </div>
   );
 }
+export default AnimalList;
